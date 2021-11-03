@@ -16,7 +16,7 @@ namespace CMM.Core
     public static class Lexer
     {
         private static readonly Dictionary<string, Type> Keywords = new();
-        private static readonly Dictionary<char, Type> Operations = new();
+        private static readonly Dictionary<string, Type> Operations = new();
 
         private static void LoadLexerData()
         {
@@ -36,18 +36,18 @@ namespace CMM.Core
             Operations.Clear();
             foreach (Type t in GetInheritingClassesOfType(typeof(Operation)))
             {
-                FieldInfo? symbolField = t.GetField(nameof(Operation.Symbol), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                FieldInfo? symbolField = t.GetField(nameof(Operation.Name), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                 Operation op = (Operation)(Activator.CreateInstance(t) ?? throw new LexingException($"Internal Error. Could not construct object of type: {t}"));
-                if (Operations.ContainsKey(op.Symbol))
-                    throw new LexingException($"Operations already contain a definition for symbol \'{op.Symbol}\' by \'{t.Name}\'");
-                Operations.Add(op.Symbol, t);
+                if (Operations.ContainsKey(op.Name))
+                    throw new LexingException($"Operations already contain a definition for \'{op.Name}\' by \'{t.Name}\'");
+                Operations.Add(op.Name, t);
             }
             #endregion
         }
 
         private static (TokenType type, LangFeature? featureType) GetFeature(string s)
         {
-            if (s.Length == 1 && Operations.TryGetValue(s[0], out Type? operationType))
+            if (Operations.TryGetValue(s, out Type? operationType))
                 return (TokenType.Operation, (LangFeature)(Activator.CreateInstance(operationType) ?? throw new LexingException($"Internal Error. Could not construct object of type: {operationType}")));
             else if (Keywords.TryGetValue(s, out Type? keywordType))
                 return (TokenType.Keyword, (LangFeature)(Activator.CreateInstance(keywordType) ?? throw new LexingException($"Internal Error. Could not construct object of type: {keywordType}")));

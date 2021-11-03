@@ -1,5 +1,4 @@
-﻿using CMM.Models.Args;
-using CMM.Models.Lang;
+﻿using CMM.Models.Lang;
 using CMM.Models.Lexing;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,6 @@ namespace CMM.Lang.Operations
 {
     public class Multiply : Operation
     {
-        public override char Symbol => '*';
+        public override string Name => "*";
     }
 }

@@ -9,6 +9,6 @@ namespace CMM.Models.Lang
 {
     public abstract class Operation : LangFeature
     {
-        public abstract char Symbol { get; }
+
     }
 }
