@@ -1,5 +1,5 @@
 ﻿# C--
-## A weird language that I'm developing.
+### A weird language that I'm developing.
 
 Plan for the language:
 - [ ] Interpreted
@@ -8,7 +8,7 @@ Plan for the language:
 - [ ] Crossplatform
 
 
-# Syntax Prototype
+## Syntax Prototype
 ```
 using "std" // Try to find a namespace 'std'. If found multiple, throw an error.
 
