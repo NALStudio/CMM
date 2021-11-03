@@ -10,7 +10,7 @@ Plan for the language:
 
 ## Syntax Prototype
 ```
-using "std" // Try to find a namespace 'std'. If found multiple, throw an error.
+using "std" // Try to find a namespace 'std'. If found on multiple assemblies, throw an error.
 
 private function<int> main() // Main cannot be set as public. Global public methods can be called directly.
 {
