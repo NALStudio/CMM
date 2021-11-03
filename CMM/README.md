@@ -3,8 +3,8 @@
 
 Plan for the language:
 - [ ] Interpreted
-- [x] Turing-complete
-- [x] Statically Typed
+- [ ] Turing-complete
+- [ ] Statically Typed
 - [ ] Crossplatform
 
 
