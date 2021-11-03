@@ -22,25 +22,21 @@ namespace CMM.Core
         {
             #region Keywords
             Keywords.Clear();
-            foreach (Type t in GetInheritingClassesOfType(typeof(Keyword)))
+            foreach ((string name, Type type) in GetLangFeaturesOfType<Keyword>())
             {
-                FieldInfo? nameField = t.GetField(nameof(Keyword.Name), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                Keyword kw = (Keyword)(Activator.CreateInstance(t) ?? throw new LexingException($"Internal Error. Could not construct object of type: {t}"));
-                if (Keywords.ContainsKey(kw.Name))
-                    throw new LexingException($"Keywords already contain a definition for \'{kw.Name}\' by \'{t.Name}\'");
-                Keywords.Add(kw.Name, t);
+                if (Keywords.ContainsKey(name))
+                    throw new LexingException($"Keywords already contain a definition for \'{name}\' by \'{type.Name}\'");
+                Keywords.Add(name, type);
             }
             #endregion
 
             #region Operations
             Operations.Clear();
-            foreach (Type t in GetInheritingClassesOfType(typeof(Operation)))
+            foreach ((string name, Type type) in GetLangFeaturesOfType<Operation>())
             {
-                FieldInfo? symbolField = t.GetField(nameof(Operation.Name), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                Operation op = (Operation)(Activator.CreateInstance(t) ?? throw new LexingException($"Internal Error. Could not construct object of type: {t}"));
-                if (Operations.ContainsKey(op.Name))
-                    throw new LexingException($"Operations already contain a definition for \'{op.Name}\' by \'{t.Name}\'");
-                Operations.Add(op.Name, t);
+                if (Operations.ContainsKey(name))
+                    throw new LexingException($"Operations already contain a definition for \'{name}\' by \'{type.Name}\'");
+                Operations.Add(name, type);
             }
             #endregion
         }
@@ -89,13 +85,20 @@ namespace CMM.Core
             }
         }
 
-        private static IEnumerable<Type> GetInheritingClassesOfType(Type type)
+        private static IEnumerable<(string name, Type type)> GetLangFeaturesOfType<T>() where T : LangFeature
         {
+            Type type = typeof(T);
+
             Assembly? assembly = Assembly.GetAssembly(type);
             if (assembly == null)
-                throw new ArgumentException($"Assembly of type: \'{type}\' could not be found!");
+                throw new ArgumentException($"Assembly of type: \'{type.Name}\' could not be found!");
 
-            return assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(type));
+            foreach (Type t in assembly.GetTypes().Where(_t => _t.IsClass && !_t.IsAbstract && _t.IsSubclassOf(type)))
+            {
+                FieldInfo? nameField = t.GetField(nameof(LangFeature.Name), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                T kw = (T)(Activator.CreateInstance(t) ?? throw new LexingException($"Internal Error. Could not construct object of type: {t.Name}"));
+                yield return (kw.Name, t);
+            }
         }
     }
 }
