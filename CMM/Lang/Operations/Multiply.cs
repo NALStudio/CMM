@@ -11,5 +11,6 @@ namespace CMM.Lang.Operations
     public class Multiply : Operation
     {
         public override string Name => "*";
+        public override OperatorDirection Direction => OperatorDirection.LeftAndRight;
     }
 }

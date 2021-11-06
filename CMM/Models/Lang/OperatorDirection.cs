@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace CMM.Models.Lang
 {
-    public abstract class Operation : LangFeature
+    public enum OperatorDirection
     {
-        public abstract OperatorDirection Direction { get; }
+        Left,
+        Right,
+        LeftOrRight,
+        LeftAndRight
     }
 }
