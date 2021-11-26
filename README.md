@@ -12,7 +12,7 @@ Plan for the language:
 ```
 using "std"; // Try to find a namespace 'std'. If found on multiple assemblies, throw an error.
 
-private function<int> main() // Main cannot be set as public. Global public methods can be called directly.
+private function<void> main() // Main cannot be set as public. Global public methods can be called directly. Void doesn't need to be written explicitly.
 {
 	int nice = 69; // The integer type determines what type the 69 will be
 	int pp = 420;
@@ -23,6 +23,6 @@ private function<int> main() // Main cannot be set as public. Global public meth
 		print($"{pp} is more or equal to {nice}"); // To have { in a formatted string, use \{
 	}
 
-	return 0; // Application must always return a status code.
+	exit(0); // Exit call is optional.
 }
 ```
