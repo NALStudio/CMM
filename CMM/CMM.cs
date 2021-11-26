@@ -1,5 +1,6 @@
 ﻿using CMM.Core;
 using CMM.Models;
+using CMM.Models.Exceptions;
 using CMM.Models.Lexing;
 using System;
 using System.Collections.Generic;
@@ -52,10 +53,10 @@ public static class CMM
                     Compile(program);
                     break;
                 default:
-                    throw new Exception($"Invalid command: \'{command}\'");
+                    throw new CMM_Exception($"Invalid command: \'{command}\'");
             }
         }
-        catch (Exception ex)
+        catch (CMM_Exception ex)
         {
             ConsoleUtility.WriteError(ex.Message);
         }

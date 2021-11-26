@@ -39,31 +39,38 @@ namespace CMM.Core
 
                 CMM_Operation? matchedOperation = MatchEndToOperation(token);
 
-                if (char.IsWhiteSpace(c) || matchedOperation is not null)
+                if (char.IsWhiteSpace(c) || matchedOperation is not null || i == line.Length - 1)
                 {
                     string value = token;
                     token = string.Empty;
 
+                    string? operationValue = null;
                     if (matchedOperation is not null)
                     {
-                        string operationValue = value[^matchedOperation.Name.Length..];
+                        operationValue = value[^matchedOperation.Name.Length..];
                         value = value[..^matchedOperation.Name.Length];
-
-                        string operationName = operationValue;
-                        System.Diagnostics.Debug.Assert(string.Equals(operationName, matchedOperation.Name, StringComparison.Ordinal));
-                        yield return new Token(TokenType.Operation, matchedOperation, operationName, (i - operationName.Length, lineNumber));
                     }
 
-                    if (value.Length < 1)
-                        continue;
+                    if (value.Length > 0)
+                    {
+                        (int column, int row) pos = (i - value.Length, lineNumber);
+                        if (Language.Keywords.TryGetValue(value, out CMM_Keyword? keyword))
+                            yield return new Token(TokenType.Keyword, keyword, value, pos);
+                        else if (Language.Types.TryGetValue(value, out CMM_Type? type))
+                            yield return new Token(TokenType.Type, type, value, pos);
+                        else if (Language.IsNumber(value))
+                            yield return new Token(TokenType.Number, null, value, pos);
+                        else
+                            yield return new Token(TokenType.Name, null, value, pos);
+                    }
 
-                    (int column, int row) pos = (i - value.Length, lineNumber);
-                    if (Language.Keywords.TryGetValue(value, out CMM_Keyword? keyword))
-                        yield return new Token(TokenType.Keyword, keyword, value, pos);
-                    else if (Language.IsNumber(value))
-                        yield return new Token(TokenType.Number, null, value, pos);
-                    else
-                        throw new LexingException($"The name \'{value}\' does not exist in the current context.");
+                    if (operationValue is not null)
+                    {
+                        System.Diagnostics.Debug.Assert(matchedOperation is not null);
+                        System.Diagnostics.Debug.Assert(string.Equals(operationValue, matchedOperation.Name, StringComparison.Ordinal));
+
+                        yield return new Token(TokenType.Operation, matchedOperation, operationValue, (i - operationValue.Length, lineNumber));
+                    }
                 }
             }
         }

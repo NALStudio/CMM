@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Models.Exceptions
+namespace CMM.Models.Exceptions;
+
+public class LanguageException : CMM_Exception
 {
-    public class LanguageException : Exception
+    public LanguageException() : base()
     {
-        public LanguageException() : base()
-        {
-        }
+    }
 
-        public LanguageException(string? message) : base(message)
-        {
-        }
+    public LanguageException(string? message) : base(message)
+    {
+    }
 
-        public LanguageException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
+    public LanguageException(string? message, Exception? innerException) : base(message, innerException)
+    {
     }
 }

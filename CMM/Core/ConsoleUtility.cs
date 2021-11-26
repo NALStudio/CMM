@@ -14,14 +14,14 @@ Usage: cmm [COMMAND] [ARGS]
         int <file>              Interpret the program
             ARGS:
                 -unsafe             Disable type-checking
-        com <file>              Compile the program
+        com <file>              Compile the program into an executable
             ARGS:
                 -unsafe             Disable type-checking
         run <file>              Compile and run the program
-        check <file>            Compile and type-check the program without generating an output file
+        check <file>            Compile and type-check the program
             ARGS: 
                 -unsafe             Disable type-checking
-        flow <file>             Compile the program and generate a 
+        flow <file>             Compile the program and generate a control flow graph
             ARGS:               
                 -unsafe             Disable type-checking
         help                    Print out this help message

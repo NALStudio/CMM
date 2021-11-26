@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Models.Exceptions
+namespace CMM.Models.Exceptions;
+
+public class LexingException : CMM_Exception
 {
-    class LexingException : Exception
+    private LexingException() : base()
     {
-        private LexingException() : base()
-        {
-        }
+    }
 
-        public LexingException(string? message) : base(message)
-        {
-        }
+    public LexingException(string? message) : base(message)
+    {
+    }
 
-        public LexingException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
+    public LexingException(string? message, Exception? innerException) : base(message, innerException)
+    {
     }
 }

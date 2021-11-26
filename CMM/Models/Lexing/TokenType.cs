@@ -10,6 +10,8 @@ namespace CMM.Models.Lexing
     {
         Keyword,
         Operation,
-        Number
+        Number,
+        Type,
+        Name
     }
 }
