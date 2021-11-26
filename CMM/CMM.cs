@@ -1,62 +1,93 @@
 ﻿using CMM.Core;
+using CMM.Models;
+using CMM.Models.Lexing;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
-namespace CMM
+namespace CMM;
+
+public static class CMM
 {
-    public static class CMM
+    private static int Main(string[] args)
     {
-        private static void CloseWithMessage(string message, int exitCode, ConsoleColor? color = null)
+        if (args.Length < 1 || args[0] == "help")
         {
-            if (color.HasValue)
-                Console.ForegroundColor = color.Value;
-            Console.WriteLine(message);
-            if (color.HasValue)
-                Console.ResetColor();
-            Environment.Exit(exitCode);
+            ConsoleUtility.WriteUsage();
+            return 0;
         }
 
-        private static void Main(string[] args)
-        {
-            if (args.Length < 1 || args[0] == "help")
-            {
-                CloseWithMessage(Constants.HelpMessage("tmp_app_name"), 0);
-                Environment.Exit(0);
-            }
+        #region Initialisations
+        Language.Init();
+        #endregion
 
-            string command = args[0];
+        string command = args[0];
+        Program program;
+        try
+        {
+             program = Program.Create(args[1..]);
+        }
+        catch (Exception ex)
+        {
+            ConsoleUtility.WriteError(ex.Message);
+            return 1;
+        }
+
+        try
+        {
             switch (command)
             {
                 // NOTE: Help is handled at the start of the application
-                case "intpr":
-                    Interpret(args[1..]);
+                case "int":
+                    Interpret(program);
                     break;
-                case "comp":
-                    Compile(args[1..]);
+                case "com":
+                    CompileToFile(program);
                     break;
                 case "run":
-                    Run(args[1..]);
+                    Run(program);
+                    break;
+                case "check":
+                    Compile(program);
                     break;
                 default:
-                    CloseWithMessage($"Invalid command: \'{command}\'", 1, ConsoleColor.Red);
-                    break;
+                    throw new Exception($"Invalid command: \'{command}\'");
             }
         }
-
-        private static void Run(string[] args)
+        catch (Exception ex)
         {
-            Compile(args);
-            // TODO: run
-            throw new NotImplementedException();
+            ConsoleUtility.WriteError(ex.Message);
         }
 
-        private static void Compile(string[] args)
-        {
-            throw new NotImplementedException();
-        }
+        return 0;
+    }
 
-        private static void Interpret(string[] args)
+    private static void Run(Program program)
+    {
+        string outputPath = CompileToFile(program);
+        Process.Start(outputPath);
+    }
+
+    private static void Compile(Program program)
+    {
+        IEnumerable<Token> tokens = Lexer.LexFile(program.FilePath);
+        foreach (Token token in tokens)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(token.Value);
+            Console.WriteLine(token.Type);
+            Console.WriteLine(token.Position);
+            Console.WriteLine();
         }
+    }
+
+    private static string CompileToFile(Program program)
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void Interpret(Program program)
+    {
+        throw new NotImplementedException();
     }
 }

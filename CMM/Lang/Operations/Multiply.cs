@@ -1,4 +1,5 @@
 ﻿using CMM.Models.Lang;
+using CMM.Models.Lang.Features;
 using CMM.Models.Lexing;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CMM.Lang.Operations
 {
-    public class Multiply : Operation
+    public class Multiply : CMM_Operation
     {
         public override string Name => "*";
         public override OperatorDirection Direction => OperatorDirection.LeftAndRight;

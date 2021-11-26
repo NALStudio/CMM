@@ -1,8 +1,7 @@
 {
   "profiles": {
     "CMM": {
-      "commandName": "Project",
-      "commandLineArgs": "comp"
+      "commandName": "Project"
     }
   }
 }

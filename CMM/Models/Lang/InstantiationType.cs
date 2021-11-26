@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Core
+namespace CMM.Models.Lang
 {
-    public static class Constants
+    public enum InstantiationType
     {
-
+        Constructor,
+        Number,
+        String
     }
 }

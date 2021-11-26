@@ -1,5 +1,4 @@
 ﻿using CMM.Models.Exceptions;
-using CMM.Models.Lang;
 using CMM.Models.Lang.Features;
 using CMM.Models.Lexing;
 using System;
@@ -15,89 +14,68 @@ namespace CMM.Core
 {
     public static class Lexer
     {
-        private static readonly Dictionary<string, Type> Keywords = new();
-        private static readonly Dictionary<string, Type> Operations = new();
-
-        private static void LoadLexerData()
+        private static CMM_Operation? MatchEndToOperation(string s)
         {
-            #region Keywords
-            Keywords.Clear();
-            foreach ((string name, Type type) in GetLangFeaturesOfType<Keyword>())
+            foreach (CMM_Operation op in Language.Operations.Values)
             {
-                if (Keywords.ContainsKey(name))
-                    throw new LexingException($"Keywords already contain a definition for \'{name}\' by \'{type.Name}\'");
-                Keywords.Add(name, type);
+                if (s.EndsWith(op.Name, StringComparison.Ordinal))
+                    return op;
             }
-            #endregion
 
-            #region Operations
-            Operations.Clear();
-            foreach ((string name, Type type) in GetLangFeaturesOfType<Operation>())
-            {
-                if (Operations.ContainsKey(name))
-                    throw new LexingException($"Operations already contain a definition for \'{name}\' by \'{type.Name}\'");
-                Operations.Add(name, type);
-            }
-            #endregion
-        }
-
-        private static (TokenType type, LangFeature? featureType) GetFeature(string s)
-        {
-            if (Operations.TryGetValue(s, out Type? operationType))
-                return (TokenType.Operation, (LangFeature)(Activator.CreateInstance(operationType) ?? throw new LexingException($"Internal Error. Could not construct object of type: {operationType}")));
-            else if (Keywords.TryGetValue(s, out Type? keywordType))
-                return (TokenType.Keyword, (LangFeature)(Activator.CreateInstance(keywordType) ?? throw new LexingException($"Internal Error. Could not construct object of type: {keywordType}")));
-            else if (Regex.IsMatch(s, @"^\d+$"))
-                return (TokenType.Number, null);
-            throw new LexingException($"The name \'{s}\' does not exist in the current context.");
+            return null;
         }
 
         private static IEnumerable<Token> LexLine(string line, int lineNumber)
         {
-            StringBuilder tokenBuilder = new();
+            string token = string.Empty;
             for (int i = 0; i < line.Length; i++)
             {
                 char c = line[i];
                 if (!char.IsWhiteSpace(c))
+                    token += c;
+
+                if (token.Length < 1)
+                    continue;
+
+                CMM_Operation? matchedOperation = MatchEndToOperation(token);
+
+                if (char.IsWhiteSpace(c) || matchedOperation is not null)
                 {
-                    tokenBuilder.Append(c);
-                }
-                else
-                {
-                    string value = tokenBuilder.ToString();
-                    (TokenType type, LangFeature? featureType) = GetFeature(value);
-                    tokenBuilder.Clear();
-                    yield return new Token(type, featureType, value, (i - value.Length, lineNumber));
+                    string value = token;
+                    token = string.Empty;
+
+                    if (matchedOperation is not null)
+                    {
+                        string operationValue = value[^matchedOperation.Name.Length..];
+                        value = value[..^matchedOperation.Name.Length];
+
+                        string operationName = operationValue;
+                        System.Diagnostics.Debug.Assert(string.Equals(operationName, matchedOperation.Name, StringComparison.Ordinal));
+                        yield return new Token(TokenType.Operation, matchedOperation, operationName, (i - operationName.Length, lineNumber));
+                    }
+
+                    if (value.Length < 1)
+                        continue;
+
+                    (int column, int row) pos = (i - value.Length, lineNumber);
+                    if (Language.Keywords.TryGetValue(value, out CMM_Keyword? keyword))
+                        yield return new Token(TokenType.Keyword, keyword, value, pos);
+                    else if (Language.IsNumber(value))
+                        yield return new Token(TokenType.Number, null, value, pos);
+                    else
+                        throw new LexingException($"The name \'{value}\' does not exist in the current context.");
                 }
             }
         }
 
         public static IEnumerable<Token> LexFile(string file)
         {
-            LoadLexerData();
-
             int lineNmbr = 0;
             foreach (string line in File.ReadLines(file))
             {
                 lineNmbr++; // Lines start from 1
                 foreach (Token t in LexLine(line, lineNmbr))
                     yield return t;
-            }
-        }
-
-        private static IEnumerable<(string name, Type type)> GetLangFeaturesOfType<T>() where T : LangFeature
-        {
-            Type type = typeof(T);
-
-            Assembly? assembly = Assembly.GetAssembly(type);
-            if (assembly == null)
-                throw new ArgumentException($"Assembly of type: \'{type.Name}\' could not be found!");
-
-            foreach (Type t in assembly.GetTypes().Where(_t => _t.IsClass && !_t.IsAbstract && _t.IsSubclassOf(type)))
-            {
-                FieldInfo? nameField = t.GetField(nameof(LangFeature.Name), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                T kw = (T)(Activator.CreateInstance(t) ?? throw new LexingException($"Internal Error. Could not construct object of type: {t.Name}"));
-                yield return (kw.Name, t);
             }
         }
     }
