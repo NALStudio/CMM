@@ -10,7 +10,7 @@ Plan for the language:
 
 ## Syntax Prototype
 ```
-using "std"; // Try to find a namespace 'std'. If found on multiple assemblies, throw an error.
+using "std"; // Import all "std" namespaces from builtins and subdirectories.
 
 private function<void> main() // Main cannot be set as public. Global public methods can be called directly. Void doesn't need to be written explicitly.
 {
