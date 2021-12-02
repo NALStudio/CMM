@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CMM.Models.Lang.Features;
 
-public abstract class CMM_ReferenceType : CMM_Type
+public abstract class CMM_ReferenceType<T> : CMM_Type<T>
 {
     public sealed override TypeBehaviour Behaviour => TypeBehaviour.Reference;
 }

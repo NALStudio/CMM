@@ -9,4 +9,9 @@ namespace CMM.Models.Lang.Features;
 public abstract class CMM_Operation : LangFeature
 {
     public abstract OperatorDirection Direction { get; }
+
+    public virtual bool AllowImplementation => true;
+
+    public abstract int Precedence { get; }
+    public abstract OperatorAssociativity Associativity { get; }
 }

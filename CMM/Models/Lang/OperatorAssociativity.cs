@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Models.Lexing
+namespace CMM.Models.Lang
 {
-    public enum TokenType
+    public enum OperatorDirection
     {
-        Keyword,
-        Operation,
-        Number,
-        Type,
-        Name
+        Left,
+        Right,
+        LeftOrRight,
+        LeftAndRight
     }
 }

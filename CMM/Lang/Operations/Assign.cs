@@ -6,12 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Lang.Operations
-{
-    public class Assign : CMM_Operation
-    {
-        public override OperatorDirection Direction => OperatorDirection.LeftAndRight;
+namespace CMM.Lang.Operations;
 
-        public override string Name => "=";
-    }
+public class Assign : CMM_Operation
+{
+    public override OperatorDirection Direction => OperatorDirection.LeftAndRight;
+
+    public override string Name => "=";
+
+    public override bool AllowImplementation => false;
+
+    public override int Precedence => 0;
+
+    public override OperatorAssociativity Associativity => OperatorAssociativity.Right;
 }

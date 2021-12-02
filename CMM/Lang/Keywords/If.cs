@@ -8,11 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Lang.Keywords
+namespace CMM.Lang.Keywords;
+
+public class If : CMM_Keyword
 {
-    public class If : CMM_Keyword
-    {
-        public override FeatureRequirements Requirements => FeatureRequirements.Callable | FeatureRequirements.CodeBlock;
-        public override string Name => "if";
-    }
+    public override FeatureRequirements Requirements => FeatureRequirements.Callable | FeatureRequirements.CodeBlock;
+    public override string Name => "if";
 }

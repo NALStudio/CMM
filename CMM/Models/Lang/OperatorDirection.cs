@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace CMM.Models.Lang
 {
-    public enum OperatorDirection
+    public enum OperatorAssociativity
     {
         Left,
-        Right,
-        LeftOrRight,
-        LeftAndRight
+        Right
     }
 }

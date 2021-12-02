@@ -72,7 +72,8 @@ public static class CMM
 
     private static void Compile(Program program)
     {
-        IEnumerable<Token> tokens = Lexer.LexFile(program.FilePath);
+        Lexer lexer = new();
+        IEnumerable<Token> tokens = lexer.LexFile(program.FilePath);
         foreach (Token token in tokens)
         {
             Console.WriteLine(token.Value);
@@ -80,6 +81,8 @@ public static class CMM
             Console.WriteLine(token.Position);
             Console.WriteLine();
         }
+
+        Parser parser = new();
     }
 
     private static string CompileToFile(Program program)
