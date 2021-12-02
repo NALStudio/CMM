@@ -16,7 +16,7 @@ private function<void> main() // Main cannot be set as public. Global public met
 {
 	int nice = 69; // The integer type determines what type the 69 will be
 	int pp = 420;
-	print(nice + (pp * 1)); // Only one operation allowed for each 'context' and ints and floats cannot be mixed in arithmetic operations;
+	print(nice + pp * 1); // ints and floats cannot be mixed in arithmetic operations;
 
 	if (pp >= nice)
 	{
