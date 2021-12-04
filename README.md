@@ -12,7 +12,7 @@ Plan for the language:
 ```
 using "std"; // Import all "std" namespaces from builtins and subdirectories.
 
-private function<void> main() // Main cannot be set as public. Global public methods can be called directly. Void doesn't need to be written explicitly.
+private function main()
 {
 	int nice = 69; // The integer type determines what type the 69 will be
 	int pp = 420;
