@@ -20,6 +20,7 @@ public static class Language
 
     public static IReadOnlyDictionary<string, CMM_Keyword> Keywords => keywords;
     public static IReadOnlyDictionary<string, CMM_Operation> Operations => operations;
+
     public static IReadOnlyDictionary<string, CMM_Type<object>> Types => types;
 
 

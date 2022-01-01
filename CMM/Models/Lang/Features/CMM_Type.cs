@@ -14,7 +14,8 @@ public abstract class CMM_Type<T> : LangFeature
 
     public abstract TypeBehaviour Behaviour { get; }
 
-    public abstract Dictionary<string, Func<CMM_Type<T>, CMM_Type<T>, CMM_Type<T>>> OperatorImplementations { get; }
+    public delegate CMM_Type<T> PerformOperation(CMM_Type<T> leftArgument, CMM_Type<T> rightArgument);
+    public abstract Dictionary<string, PerformOperation> OperatorImplementations { get; }
 
 
     public bool Nullable { get; set; }

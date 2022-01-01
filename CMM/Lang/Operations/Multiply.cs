@@ -12,7 +12,7 @@ namespace CMM.Lang.Operations;
 public class Multiply : CMM_Operation
 {
     public override string Name => "*";
-    public override OperatorDirection Direction => OperatorDirection.LeftAndRight;
+    public override OperationDirection OperationDirection => OperationDirection.LeftAndRight;
 
     public override int Precedence => 3;
     public override OperatorAssociativity Associativity => OperatorAssociativity.Left;

@@ -15,7 +15,7 @@ public class Integer : CMM_ValueType<int>
 
     public override string Name => "int";
 
-    public override Dictionary<string, Func<CMM_Type<int>, CMM_Type<int>, CMM_Type<int>>> OperatorImplementations => new()
+    public override Dictionary<string, PerformOperation> OperatorImplementations => new()
     {
         { "*", (x, y) => CreateNew(new Argument(((Integer)x).value * ((Integer)y).value)) }
     };

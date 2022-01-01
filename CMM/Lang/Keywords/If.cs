@@ -1,4 +1,5 @@
 ﻿
+using CMM.Core;
 using CMM.Models.Lang;
 using CMM.Models.Lang.Features;
 using CMM.Models.Lexing;
@@ -14,4 +15,8 @@ public class If : CMM_Keyword
 {
     public override FeatureRequirements Requirements => FeatureRequirements.Callable | FeatureRequirements.CodeBlock;
     public override string Name => "if";
+    public override Dictionary<CMM_Keyword, ReferenceSearchBehaviour> AcquireKeywordReferences => new()
+    {
+        { Language.Keywords["else"], ReferenceSearchBehaviour.AfterCodeblock }
+    };
 }

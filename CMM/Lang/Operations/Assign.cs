@@ -10,11 +10,12 @@ namespace CMM.Lang.Operations;
 
 public class Assign : CMM_Operation
 {
-    public override OperatorDirection Direction => OperatorDirection.LeftAndRight;
+    public override OperationDirection OperationDirection => OperationDirection.LeftAndRight;
 
     public override string Name => "=";
 
     public override bool AllowImplementation => false;
+    public override bool AllowAsStatement => true;
 
     public override int Precedence => 0;
 

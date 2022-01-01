@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Models.Lang
+namespace CMM.Models.Parsing;
+
+public class Node
 {
-    public enum OperatorAssociativity
-    {
-        Left,
-        Right
-    }
 }

@@ -29,6 +29,11 @@ public class Lexer
 
     private IEnumerable<Token> LexLine(string line, int lineNumber)
     {
+        // Remove comment(s)
+        int commentIndex = line.IndexOf("//");
+        if (commentIndex != -1)
+            line = line.Remove(commentIndex);
+
         string token = string.Empty;
         for (int i = 0; i < line.Length; i++)
         {
@@ -57,7 +62,7 @@ public class Lexer
                 {
                     (int column, int row) pos = (i - value.Length, lineNumber);
                     if (value.Length == 1 && ControlChars.All.Contains(value[0]))
-                        yield return new Token(AbstractType.ControlChar, new CMM_ControlChar(value[0]), value, pos); // NOTE: value is exactly one character so no need to [0]
+                        yield return new Token(AbstractType.ControlChar, new CMM_ControlChar(value[0]), value, pos); // NOTE: value is exactly one character so no need to value[0].ToString()
                     else if (Language.Keywords.TryGetValue(value, out CMM_Keyword? keyword))
                         yield return new Token(AbstractType.Keyword, keyword, value, pos);
                     else if (Language.Types.TryGetValue(value, out CMM_Type<object>? type))

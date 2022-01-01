@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CMM.Models.Lang
 {
-    public enum OperatorAssociativity
+    public enum ReferenceSearchBehaviour
     {
-        Left,
-        Right
+        ImmediatelyBefore,
+        ImmediatelyAfter,
+        AfterCodeblock
     }
 }
