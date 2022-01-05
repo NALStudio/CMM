@@ -1,4 +1,5 @@
 ﻿using CMM.Core;
+using CMM.Language;
 using CMM.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ public static class Program
         }
 
         #region Initialisations
+        LanguageData.Init();
         #endregion
 
         string command = args[0];
