@@ -1,4 +1,4 @@
-﻿# C--
+# C--
 ### A weird language that I'm developing.
 
 Plan for the language:
@@ -10,9 +10,9 @@ Plan for the language:
 
 ## Syntax Prototype
 ```
-using "std"; // Import all "std" namespaces from builtins and subdirectories.
+using std; // Import all "std" namespaces from builtins and subdirectories.
 
-private function main() // Main cannot be set as public. Global public methods can be called directly.
+private function main() // Main cannot be set as public. Global public methods can be called directly. Function returns are written like "function<int>"
 {
 	int nice = 69; // The integer type determines what type the 69 will be
 	int pp = 420;
