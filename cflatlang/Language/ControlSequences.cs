@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Language;
+namespace cflatlang.Language;
 
 /// <summary>
 /// Same as Separators, but need to be matched manually.

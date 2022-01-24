@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Models;
+namespace cflatlang.Models;
 
 internal record TokenPosition
 {
@@ -18,4 +18,7 @@ internal record TokenPosition
     public int Line { get; }
     public int Column { get; }
     public int Length { get; }
+
+    public override string ToString()
+        => $"{Line}:{Column}:{Length}";
 }

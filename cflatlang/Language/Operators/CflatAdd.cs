@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Language;
+namespace cflatlang.Language.Operators;
 
-internal abstract class LangFeature
+internal class CflatAdd : CflatOperator
 {
-    public abstract string Name { get; }
+    public override string Name => "+";
 }

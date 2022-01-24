@@ -5,19 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Models;
+namespace cflatlang.Models;
 
-internal class CMM_Program
+internal class CflatProgram
 {
     public bool AllowUnsafeCode { get; private set; } = false;
     public string FilePath { get; }
 
-    private CMM_Program(string filepath)
+    private CflatProgram(string filepath)
     {
         FilePath = filepath;
     }
 
-    public static CMM_Program Create(string[] args)
+    public static CflatProgram Create(string[] args)
     {
         if (args.Length < 1)
             throw new ArgumentException("No filepath provided.");
@@ -26,7 +26,7 @@ internal class CMM_Program
         if (!File.Exists(filepath))
             throw new ArgumentException($"Invalid path: '{filepath}'");
 
-        CMM_Program program = new(filepath);
+        CflatProgram program = new(filepath);
 
         program.AllowUnsafeCode = args.Contains("-unsafe");
 

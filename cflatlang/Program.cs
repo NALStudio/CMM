@@ -1,13 +1,14 @@
-﻿using CMM.Core;
-using CMM.Language;
-using CMM.Models;
+﻿using cflatlang.Core;
+using cflatlang.Language;
+using cflatlang.Lexing;
+using cflatlang.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace CMM;
+namespace cflatlang;
 
 public static class Program
 {
@@ -19,15 +20,11 @@ public static class Program
             return 0;
         }
 
-        #region Initialisations
-
-        #endregion
-
         string command = args[0];
-        CMM_Program program;
+        CflatProgram program;
         try
         {
-            program = CMM_Program.Create(args[1..]);
+            program = CflatProgram.Create(args[1..]);
         }
         catch (Exception ex)
         {
@@ -41,7 +38,9 @@ public static class Program
             "com" => Compile(program).exitCode,
             "run" => Run(program),
             "check" => GenerateIR(program),
-            _ => InvalidCommandError(command)
+            "flow" => GenerateCFG(program),
+            "byte" => GenerateAndSaveIR(program),
+            _ => InvalidCommandError(command) // NOTE: help is handled above.
         };
     }
 
@@ -52,7 +51,7 @@ public static class Program
     }
 
 
-    private static int Run(CMM_Program program)
+    private static int Run(CflatProgram program)
     {
         (string outputPath, int exitCode) = Compile(program);
         if (exitCode != 0)
@@ -63,18 +62,33 @@ public static class Program
         return runProcess.ExitCode;
     }
 
-    private static int GenerateIR(CMM_Program program)
+    private static int GenerateIR(CflatProgram program)
+    {
+        Lexer lexer = new();
+        foreach (LexingToken token in lexer.EvaluateFile(program.FilePath))
+            Console.WriteLine(token);
+        throw new NotImplementedException();
+    }
+
+    private static int GenerateAndSaveIR(CflatProgram program)
     {
         throw new NotImplementedException();
     }
 
-    private static (string path, int exitCode) Compile(CMM_Program program)
+    private static int GenerateCFG(CflatProgram program)
     {
         throw new NotImplementedException();
     }
 
-    private static int Interpret(CMM_Program program)
+    private static (string path, int exitCode) Compile(CflatProgram program)
     {
+        throw new NotImplementedException();
+    }
+
+    private static int Interpret(CflatProgram program)
+    {
+        // TODO: IR
+        _ = GenerateIR(program);
         throw new NotImplementedException();
     }
 }

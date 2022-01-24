@@ -1,5 +1,5 @@
-﻿using CMM.Exceptions;
-using CMM.Lexing;
+﻿using cflatlang.Exceptions;
+using cflatlang.Lexing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -9,16 +9,20 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Language;
+namespace cflatlang.Language;
 
 internal static class LanguageData
 {
-    private static List<CMM_Keyword>? _keywords = null;
-    public static IReadOnlyList<CMM_Keyword> Keywords => _keywords ??= GetLangFeaturesOfType<CMM_Keyword>();
+    private static List<CflatKeyword>? _keywords = null;
+    public static IReadOnlyList<CflatKeyword> Keywords => _keywords ??= GetLangFeaturesOfType<CflatKeyword>();
 
 
-    private static List<CMM_Operator>? _operators = null;
-    public static IReadOnlyList<CMM_Operator> Operators => _operators ??= GetLangFeaturesOfType<CMM_Operator>();
+    private static List<CflatOperator>? _operators = null;
+    public static IReadOnlyList<CflatOperator> Operators => _operators ??= GetLangFeaturesOfType<CflatOperator>();
+
+
+    private static List<CflatModifier>? _modifiers = null;
+    public static IReadOnlyList<CflatModifier> Modifiers => _modifiers ??= GetLangFeaturesOfType<CflatModifier>();
 
 
     public static bool IsDiscardName(string name)
@@ -43,7 +47,7 @@ internal static class LanguageData
             foreach (Type t in assembly.GetTypes().Where(_t => _t.IsClass && !_t.IsAbstract && _t.IsSubclassOf(type)))
             {
                 FieldInfo? nameField = t.GetField(nameof(LangFeature.Name), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                T kw = (T)(Activator.CreateInstance(t) ?? throw new CMM_Exception($"Internal Error. Could not construct object of type: {t.Name}"));
+                T kw = (T)(Activator.CreateInstance(t) ?? throw new CflatException($"Internal Error. Could not construct object of type: {t.Name}"));
                 instances.Add(kw);
             }
         }

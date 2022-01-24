@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Language;
+namespace cflatlang.Language;
 
 internal static class Separators
 {

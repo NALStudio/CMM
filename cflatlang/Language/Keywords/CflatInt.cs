@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Lexing;
+namespace cflatlang.Language.Keywords;
 
-internal enum LiteralType
+internal class CflatInt : CflatKeyword
 {
-    Boolean,
-    Integer,
-    Decimal,
-    String
+    public override string Name => "int";
 }

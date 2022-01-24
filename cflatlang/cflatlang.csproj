@@ -6,13 +6,9 @@
     <Nullable>enable</Nullable>
 
 	<PackAsTool>true</PackAsTool>
-	<ToolCommandName>cmm</ToolCommandName>
+	<ToolCommandName>cflat</ToolCommandName>
 	<PackageOutputPath>./bin/Package/</PackageOutputPath>
 	<IsPublishable>False</IsPublishable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Language\Keywords\" />
-  </ItemGroup>
 
 </Project>

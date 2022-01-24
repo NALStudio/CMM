@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Language;
+namespace cflatlang.Language;
 
-internal abstract class CMM_Keyword : LangFeature
+internal abstract class CflatKeyword : LangFeature
 {
 }

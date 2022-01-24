@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Core;
+namespace cflatlang.Core;
 
 internal static class ConsoleUtility
 {
@@ -12,21 +12,14 @@ internal static class ConsoleUtility
     {
         StringBuilder sb = new();
 
-        sb.AppendLine("Usage: cmm [COMMAND] [ARGS]"                                                          );
+        sb.AppendLine("Usage: cflat [COMMAND] [ARGS]"                                                        );
         sb.AppendLine("    COMMAND:"                                                                         );
         sb.AppendLine("        int <file>              Interpret the program"                                );
-        sb.AppendLine("            ARGS:"                                                                    );
-        sb.AppendLine("                -unsafe             Disable type-checking"                            );
         sb.AppendLine("        com <file>              Compile the program into an executable"               );
-        sb.AppendLine("            ARGS:"                                                                    );
-        sb.AppendLine("                -unsafe             Disable type-checking"                            );
         sb.AppendLine("        run <file>              Compile and run the program"                          );
         sb.AppendLine("        check <file>            Compile and type-check the program"                   );
-        sb.AppendLine("            ARGS: "                                                                   );
-        sb.AppendLine("                -unsafe             Disable type-checking"                            );
         sb.AppendLine("        flow <file>             Compile the program and generate a control flow graph");
-        sb.AppendLine("            ARGS: "                                                                   );
-        sb.AppendLine("                -unsafe             Disable type-checking"                            );
+        sb.AppendLine("        byte <file>             Compile the program into Cb bytecode"                 );
         sb.AppendLine("        help                    Print out this help message"                          );
 
         return sb.ToString();

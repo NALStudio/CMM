@@ -1,14 +1,15 @@
-﻿using CMM.Exceptions;
-using CMM.Language;
-using CMM.Models;
+﻿using cflatlang.Exceptions;
+using cflatlang.Language;
+using cflatlang.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CMM.Lexing;
+namespace cflatlang.Lexing;
 
 internal class Lexer
 {
@@ -66,7 +67,7 @@ internal class Lexer
         return false;
     }
 
-    private IEnumerable<LexingToken> LexLine(string line, int lineNumber)
+    private IEnumerable<LexingToken> EvaluateLine(string line, int lineNumber)
     {
         string lineRest = line;
 
@@ -83,35 +84,53 @@ internal class Lexer
 
         while ((lineRest = lineRest.TrimStart()).Length > 0)
         {
-            if (TryMatchIdentifier(lineRest, out string? mId))
+            if (Parsers.TryMatchLiteralFromStart(lineRest, out LiteralType _, out string? mLit))
             {
-                ChopLineStart(mId.Length);
-                yield return new LexingToken(LexingType.Identifier, mId, GetTokenPos(mId, lineRest));
-            }
-            else if (TryMatchLangFeatureFromEnumerable(lineRest, LanguageData.Keywords, out string? mKw))
-            {
-                ChopLineStart(mKw.Length);
-                yield return new LexingToken(LexingType.Keyword, mKw, GetTokenPos(mKw, lineRest));
-            }
-            else if (TryMatchSeparator(lineRest, out string? mSep))
-            {
-                ChopLineStart(mSep.Length);
-                yield return new LexingToken(LexingType.Separator, mSep, GetTokenPos(mSep, lineRest));
+                ChopLineStart(mLit.Length);
+                yield return new LexingToken(LexingType.Literal, mLit, GetTokenPos(mLit, lineRest));
             }
             else if (TryMatchLangFeatureFromEnumerable(lineRest, LanguageData.Operators, out string? mOp))
             {
                 ChopLineStart(mOp.Length);
                 yield return new LexingToken(LexingType.Operator, mOp, GetTokenPos(mOp, lineRest));
             }
-            else if (Parsers.TryMatchLiteralFromStart(lineRest, out LiteralType _, out string? mLit))
+            else if (TryMatchSeparator(lineRest, out string? mSep))
             {
-                ChopLineStart(mLit.Length);
-                yield return new LexingToken(LexingType.Literal, mLit, GetTokenPos(mLit, lineRest));
+                ChopLineStart(mSep.Length);
+                yield return new LexingToken(LexingType.Separator, mSep, GetTokenPos(mSep, lineRest));
+            }
+            else if (TryMatchLangFeatureFromEnumerable(lineRest, LanguageData.Keywords, out string? mKw))
+            {
+                ChopLineStart(mKw.Length);
+                yield return new LexingToken(LexingType.Keyword, mKw, GetTokenPos(mKw, lineRest));
+            }
+            else if (TryMatchLangFeatureFromEnumerable(lineRest, LanguageData.Modifiers, out string? mMd))
+            {
+                ChopLineStart(mMd.Length);
+                yield return new LexingToken(LexingType.Modifier, mMd, GetTokenPos(mMd, lineRest));
+            }
+            else if (TryMatchIdentifier(lineRest, out string? mId))
+            {
+                ChopLineStart(mId.Length);
+                yield return new LexingToken(LexingType.Identifier, mId, GetTokenPos(mId, lineRest));
             }
             else
             {
                 throw new Exception($"'{lineRest}' was not matched to anything.");
             }
+        }
+    }
+
+    public IEnumerable<LexingToken> EvaluateFile(string filepath)
+    {
+        int lineNumber = 1;
+
+        foreach (string line in File.ReadLines(filepath))
+        {
+            foreach (LexingToken token in EvaluateLine(line, lineNumber))
+                yield return token;
+
+            lineNumber++;
         }
     }
 }

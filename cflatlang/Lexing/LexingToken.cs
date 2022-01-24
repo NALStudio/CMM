@@ -1,11 +1,11 @@
-﻿using CMM.Models;
+﻿using cflatlang.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Lexing;
+namespace cflatlang.Lexing;
 
 internal class LexingToken
 {
@@ -19,4 +19,7 @@ internal class LexingToken
     public LexingType Token { get; set; }
     public string Value { get; set; }
     public TokenPosition Position { get; set; }
+
+    public override string ToString()
+        => $"LexingToken({Token}: '{Value}' at {Position})";
 }

@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMM.Lexing;
+namespace cflatlang.Language;
 
-internal enum LexingType
+internal abstract class LangFeature
 {
-    Identifier,
-    Keyword,
-    Separator,
-    Operator,
-    Literal
+    public abstract string Name { get; }
 }
