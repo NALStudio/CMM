@@ -1,5 +1,5 @@
 # Cb
-### Cb __(pronounced: C-flat)__ is my own programming language. Runs on .NOT Framework (Not Optimized or Tuned Framework) 
+### Cb __(pronounced: C-flat)__ is my own programming language. It runs on the .NOT Framework (Not Optimized or Tuned Framework).
 
 Plan for the language:
 - [ ] Interpreted
