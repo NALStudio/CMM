@@ -1,5 +1,5 @@
-# C--
-### A weird language that I'm developing.
+# Cb __(C-flat)__
+### My own programming language. Runs on .NOT Framework (Not Optimized or Tuned Framework) 
 
 Plan for the language:
 - [ ] Interpreted
