@@ -4,6 +4,7 @@ using CMM.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace CMM;
@@ -19,7 +20,7 @@ public static class Program
         }
 
         #region Initialisations
-        LanguageData.Init();
+
         #endregion
 
         string command = args[0];
@@ -37,9 +38,9 @@ public static class Program
         return command switch
         {
             "int" => Interpret(program),
-            "com" => CompileToFile(program).exitCode,
+            "com" => Compile(program).exitCode,
             "run" => Run(program),
-            "check" => Compile(program),
+            "check" => GenerateIR(program),
             _ => InvalidCommandError(command)
         };
     }
@@ -53,7 +54,7 @@ public static class Program
 
     private static int Run(CMM_Program program)
     {
-        (string outputPath, int exitCode) = CompileToFile(program);
+        (string outputPath, int exitCode) = Compile(program);
         if (exitCode != 0)
             return exitCode;
 
@@ -62,12 +63,12 @@ public static class Program
         return runProcess.ExitCode;
     }
 
-    private static int Compile(CMM_Program program)
+    private static int GenerateIR(CMM_Program program)
     {
         throw new NotImplementedException();
     }
 
-    private static (string path, int exitCode) CompileToFile(CMM_Program program)
+    private static (string path, int exitCode) Compile(CMM_Program program)
     {
         throw new NotImplementedException();
     }
