@@ -2,7 +2,8 @@
 ### A weird language that I'm developing.
 Cb (pronounced "See Flat") is a modern, object-oriented, and type-safe programming language. Cb enables developers to build many types of secure and robust applications that run in .NOT (Non-Optimised Technology). Cb has its roots in the C family of languages and will be immediately familiar to C, C++, Java, and JavaScript programmers.
 
-Plan for the language:
+
+### Plan for the language:
 - [ ] Interpreted
 - [ ] Turing-complete
 - [ ] Statically Typed
