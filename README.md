@@ -10,7 +10,7 @@ Plan for the language:
 
 ## Syntax Prototype
 ```
-using std; // Import all "std" namespaces from builtins and subdirectories. std will most likely be renamed to something PascalCase friendly.
+using Standard; // Import all "Standard" namespaces from builtins and subdirectories.
 
 namespace MyApp;
 
