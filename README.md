@@ -24,7 +24,7 @@ private function Main() // Main cannot be set as public. Global public methods c
 
 	if (pp >= nice)
 	{
-		Print($"{pp} is more or equal to {nice}"); // To have { in a formatted string, use \{
+		Print("{pp} is more or equal to {nice}"); // To have { in a string, use \{
 	}
 
 	Exit(0); // Exit call is optional.
