@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace cflatlang.Lexing;
 
-internal static class Parsers
+internal static class LexingParsers
 {
     public static bool TryMatchLiteralFromStart(string text, [MaybeNullWhen(false)] out LiteralType type, [MaybeNullWhen(false)] out string match)
     {

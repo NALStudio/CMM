@@ -8,4 +8,6 @@ namespace cflatlang.Language;
 
 internal abstract class CflatOperator : LangFeature
 {
+    public abstract int Precedence { get; }
+    public abstract OperatorAssociativity Associativity { get; }
 }

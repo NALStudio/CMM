@@ -9,6 +9,7 @@ namespace cflatlang.Language;
 
 internal static class Separators
 {
+    // NOTE: Call and Inner context symbols are checked using a logical or in parser
     public const char CallStart = '(';
     public const char CallEnd = ')';
     public const char InnerContextStart = '(';

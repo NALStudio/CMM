@@ -84,7 +84,7 @@ internal class Lexer
 
         while ((lineRest = lineRest.TrimStart()).Length > 0)
         {
-            if (Parsers.TryMatchLiteralFromStart(lineRest, out LiteralType _, out string? mLit))
+            if (LexingParsers.TryMatchLiteralFromStart(lineRest, out LiteralType _, out string? mLit))
             {
                 ChopLineStart(mLit.Length);
                 yield return new LexingToken(LexingType.Literal, mLit, GetTokenPos(mLit, lineRest));

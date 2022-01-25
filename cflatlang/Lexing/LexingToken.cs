@@ -9,17 +9,17 @@ namespace cflatlang.Lexing;
 
 internal class LexingToken
 {
-    public LexingToken(LexingType token, string value, TokenPosition position)
+    public LexingToken(LexingType type, string value, TokenPosition position)
     {
-        Token = token;
+        Type = type;
         Value = value;
         Position = position;
     }
 
-    public LexingType Token { get; set; }
+    public LexingType Type { get; set; }
     public string Value { get; set; }
     public TokenPosition Position { get; set; }
 
     public override string ToString()
-        => $"LexingToken({Token}: '{Value}' at {Position})";
+        => $"LexingToken({Type}: '{Value}' at {Position})";
 }

@@ -9,4 +9,7 @@ namespace cflatlang.Language.Operators;
 internal class CflatAdd : CflatOperator
 {
     public override string Name => "+";
+
+    public override int Precedence => 12;
+    public override OperatorAssociativity Associativity => OperatorAssociativity.Left;
 }
