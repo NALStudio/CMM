@@ -8,7 +8,14 @@ namespace cflatlang.Parsing;
 
 internal class ParsingScope
 {
-    public Dictionary<string, ParsingFunction> Functions = new();
-    public Dictionary<string, string> Constants = new();
-    public Dictionary<string, string> Variables = new();
+    public Dictionary<string, ParsingFunction> Functions { get; }
+    public Dictionary<string, string> Constants { get; }
+    public Dictionary<string, string> Variables { get; }
+
+    public ParsingScope()
+    {
+        Functions = new();
+        Constants = new();
+        Variables = new();
+    }
 }

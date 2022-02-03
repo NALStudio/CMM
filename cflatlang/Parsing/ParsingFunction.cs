@@ -9,13 +9,17 @@ namespace cflatlang.Parsing;
 
 internal class ParsingFunction
 {
+    public ParsingContext ParentContext { get; }
+
     public string Name { get; }
     public ParsingScope InnerScope { get; }
     public IReadOnlyList<LexingToken> LexingTokens { get; private set; }
 
 
-    public ParsingFunction(string name, IEnumerable<LexingToken> tokens)
+    public ParsingFunction(ParsingContext parent, string name, IEnumerable<LexingToken> tokens)
     {
+        ParentContext = parent;
+
         Name = name;
         InnerScope = new();
 
