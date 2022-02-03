@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cflatlang.Lexing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,16 @@ namespace cflatlang.Parsing;
 
 internal class Parser
 {
-    public void Evaluate()
+    private ParsingContext Context { get; set; }
+
+    public void Evaluate(IEnumerable<LexingToken> lexingTokens)
     {
         ModuleParser moduleParser = new();
         FunctionParser functionParser = new();
 
-        ParsingScope scope = new();
+        ParsingContext context = new(lexingTokens);
 
-        moduleParser.Evaluate(ref scope);
-        functionParser.Evaluate(ref scope);
+        moduleParser.Evaluate(ref context);
+        functionParser.Evaluate(ref context);
     }
 }

@@ -2,6 +2,7 @@
 using cflatlang.Language;
 using cflatlang.Lexing;
 using cflatlang.Models;
+using cflatlang.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -65,8 +66,11 @@ public static class Program
     private static int GenerateIR(CflatProgram program)
     {
         Lexer lexer = new();
-        foreach (LexingToken token in lexer.EvaluateFile(program.FilePath))
-            Console.WriteLine(token);
+        IEnumerable<LexingToken> tokens = lexer.EvaluateFile(program.FilePath);
+
+        Parser parser = new();
+        parser.Evaluate(tokens);
+
         throw new NotImplementedException();
     }
 

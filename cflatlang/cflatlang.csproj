@@ -11,4 +11,8 @@
 	<IsPublishable>False</IsPublishable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Humanizer" Version="2.13.14" />
+  </ItemGroup>
+
 </Project>

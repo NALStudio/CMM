@@ -12,7 +12,7 @@ namespace cflatlang.Parsing;
 
 internal class FunctionParser
 {
-    private IEnumerable<LexingToken> EvaluateSingleFunction(string functionName, ref ParsingScope scope)
+    private IEnumerable<LexingToken> EvaluateSingleFunction(string functionName, ref ParsingContext scope)
     {
         const string callInnerStart = "(";
         Trace.Assert(string.Equals(callInnerStart, Separators.InnerContextStart.ToString(), StringComparison.Ordinal));
@@ -103,11 +103,11 @@ internal class FunctionParser
         return outputQueue;
     }
 
-    internal void Evaluate(ref ParsingScope scope)
+    internal void Evaluate(ref ParsingContext context)
     {
-        foreach (string functionName in scope.Functions.Keys)
+        foreach (string functionName in context.Scope.Functions)
         {
-            _ = EvaluateSingleFunction(functionName, ref scope);
+            _ = EvaluateSingleFunction(functionName, ref context);
             throw new NotImplementedException();
         }
     }
